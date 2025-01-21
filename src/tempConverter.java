@@ -1,3 +1,6 @@
+
+import java.text.DecimalFormat;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,7 +17,37 @@ public class tempConverter extends javax.swing.JFrame {
      */
     public tempConverter() {
         initComponents();
+        setLocationRelativeTo(null);
+        jTextField1.setFocusable(false);
+        jTextField2.setFocusable(false);
     }
+    
+    DecimalFormat df2 = new DecimalFormat("##.##");
+    
+    double ctof (double c) {
+        double f;
+        f = ((9*c)/5)+32;
+        return f;
+    }
+    
+    double ftoc (double f) {
+        double c;
+        c = ((f-32)*5)/9;
+        return c;
+    }
+    
+    public void displayFormula (double c, double f) {
+        if(jComboBox2.getSelectedIndex()==0) {
+            jLabel4.setText(String.format("(%s°F − 32) × 5/9 = %s°C", df2.format(f),df2.format(c)));
+        }   else{
+            jLabel4.setText(String.format("%s(0°C × 9/5) + 32 = %s°F", df2.format(c),df2.format(f)));
+        }
+    }
+    
+    
+//    public static void celToFar() {
+//        jTextField1.getText(WIDTH, WIDTH)
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,10 +74,20 @@ public class tempConverter extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("0");
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("32");
+        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField2MouseClicked(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("=");
@@ -55,14 +98,19 @@ public class tempConverter extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Klyde Apostol");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Degree Celsius", "Farenheit" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Degree Celsius", "Degree Farenheit" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Farenheit", "Degree Celsius" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Degree Farenheit", "Degree Celsius" }));
 
         jLabel3.setBackground(new java.awt.Color(0, 102, 204));
         jLabel3.setText("Formula");
 
-        jLabel4.setText("(0°C × 9/5) + 32 = 32°F");
+        jLabel4.setText("("+ jTextField1.getText() + "°C × 9/5) + 32 = " + jTextField2.getText() + "°F");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,6 +179,36 @@ public class tempConverter extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setFocusable(true);
+        jTextField1.requestFocus();
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
+        jTextField2.setFocusable(true);
+        jTextField2.requestFocus();
+    }//GEN-LAST:event_jTextField2MouseClicked
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        double c,f;
+        String txt;
+        txt = jTextField1.getText();
+        
+        if (jComboBox2.getSelectedIndex() == 1) {
+            jComboBox3.setSelectedIndex(1);
+            c = Double.parseDouble(txt);
+            f=ctof(c);
+            displayFormula(c,f);
+
+        } else {
+            jComboBox3.setSelectedIndex(0);
+            f = Double.parseDouble(txt);
+            c=ftoc(f);
+            displayFormula(c,f);
+
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
