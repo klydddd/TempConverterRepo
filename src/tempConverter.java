@@ -266,6 +266,11 @@ public class tempConverter extends javax.swing.JFrame {
                 
                 jTextField2.setText(df4.format(f));
                 displayFormula(c, f);
+            } else {
+                f = Double.parseDouble(jTextField1.getText());
+                c=ftoc(f);
+                jTextField2.setText(df2.format(c));
+                displayFormula(c, f);
             }
         }
     }//GEN-LAST:event_jTextField1KeyReleased
