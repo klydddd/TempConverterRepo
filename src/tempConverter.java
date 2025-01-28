@@ -23,6 +23,7 @@ public class tempConverter extends javax.swing.JFrame {
     }
     
     DecimalFormat df2 = new DecimalFormat("##.##");
+    DecimalFormat df4 = new DecimalFormat("####.####");
     
     double ctof (double c) {
         double f;
@@ -79,6 +80,11 @@ public class tempConverter extends javax.swing.JFrame {
                 jTextField1MouseClicked(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -106,6 +112,11 @@ public class tempConverter extends javax.swing.JFrame {
         });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Degree Farenheit", "Degree Celsius" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(0, 102, 204));
         jLabel3.setText("Formula");
@@ -209,6 +220,55 @@ public class tempConverter extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        double c,f;
+        String txt;
+        txt = jTextField2.getText();
+        
+        if (jComboBox3.getSelectedIndex() == 1) {
+            jComboBox2.setSelectedIndex(1);
+            f = Double.parseDouble(txt);
+            c=ftoc(f);
+            displayFormula(c,f);
+
+        } else {
+            jComboBox2.setSelectedIndex(0);
+            
+            c = Double.parseDouble(txt);
+            
+            f=ctof(c);
+            displayFormula(c,f);
+
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+       // TODO add your handling code here:
+        double c, f;
+        String txt = jTextField1.getText();
+        
+        if (txt.equals("") || txt.equals("-")) {
+            jTextField2.setText("");
+            jTextField1.requestFocus();
+            
+            if (jComboBox2.getSelectedIndex() == 0)
+                jLabel2.setText("");
+            else
+                jLabel2.setText("");
+            
+        } else {
+            if (jComboBox2.getSelectedIndex() == 0 ) {
+                c = Double.parseDouble(jTextField1.getText());
+                f = ctof(c);
+                
+                jTextField2.setText(df4.format(f));
+                displayFormula(c, f);
+            }
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
